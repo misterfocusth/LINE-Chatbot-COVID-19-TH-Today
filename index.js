@@ -1172,7 +1172,7 @@ app.get("/", (req, res) => {
 
 app.get("/share", (req, res) => {
   console.log(__dirname);
-  res.sendFile("/app/share.html") // share.html
+  res.sendFile("/app/index.html") // index.html
 });
 
 fetchData()
