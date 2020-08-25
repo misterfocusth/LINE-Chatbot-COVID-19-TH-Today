@@ -1,10 +1,10 @@
-'use strict';
+/*jshint esversion: 8 */
 
 const line = require('@line/bot-sdk');
 const express = require('express');
 const fetch = require("node-fetch");
 
-var response = {}
+var response = {};
 
 // Payload Objects
 
@@ -1172,10 +1172,8 @@ app.get("/", (req, res) => {
 
 app.get("/share", (req, res) => {
   console.log(__dirname);
-  res.sendFile("/app/share.html") // share.html
+  res.sendFile("/app/index.html"); // index.html
 });
-
-fetchData()
 
 app.post('/callback', line.middleware(config), (req, res) => {
   Promise
@@ -1236,7 +1234,7 @@ function handleEvent(event) {
           }
         ]
       }
-    }]
+    }];
     return client.replyMessage(event.replyToken, msg);
   } else if (event.message.text == "Open_LIFF" && event.message.type == "text") {
     const msg = [{
@@ -1249,24 +1247,23 @@ function handleEvent(event) {
         "stickerId": "51626501"
       }
     ];
-    client.replyMessage(event.replyToken, msg)
+    client.replyMessage(event.replyToken, msg);
   } else if (event.message.text == "เมนู:รายงานวันนี้" && event.message.type == "text") {
-    console.log(event);
-    fetchData(event)
-    sendFlexMessage(event)
+    fetchData(event);
+    return client.replyMessage(event.replyToken, CAROUSEL_1);
   } else if (event.message.text == "QP:ยอดสะสมในไทยทั้งหมด") {
-    fetchData(event)
+    fetchData(event);
     client.replyMessage(event.replyToken, FLEX_ALL_IN_TH);
   } else if (event.message.text == "QP:สรุปสถานการณ์ผู้ติดเชื้อวันนี้") {
-    fetchData(event)
+    fetchData(event);
     return client.replyMessage(event.replyToken, FLEX_TODAY);
   } else if (event.message.text == "QP:คำเเนะนำเเละการป้องกัน" || event.message.text == "เมนู:คำเเนะนำเเละการป้องกัน") {
     return client.replyMessage(event.replyToken, CAROUSEL_2);
   } else if (event.message.text == "QP:เกี่ยวกับนักพัฒนา" || event.message.text == "เมนู:เกี่ยวกับนักพัฒนา") {
-    fetchData(event)
+    fetchData(event);
     return client.replyMessage(event.replyToken, FLEX_ABOUT_DEVELOPER);
   } else {
-    fetchData(event)
+    fetchData(event);
     const msg = [{
       "type": "text", // ①
       "text": "หรือคุณหมายถึง ?",
@@ -1313,13 +1310,9 @@ function handleEvent(event) {
           }
         ]
       }
-    }]
+    }];
     return client.replyMessage(event.replyToken, msg);
   }
-}
-
-function sendFlexMessage(event) {
-  client.replyMessage(event.replyToken, CAROUSEL_1);
 }
 
 function resetValue() {
@@ -2097,10 +2090,10 @@ function fetchData(event) {
   fetch("https://covid19.th-stat.com/api/open/today")
     .then(res => res.json())
     .then((res) => {
-      console.log(res)
-      response = res
+      console.log(res);
+      response = res;
     }).catch(error => console.log(error))
-    .then(() => resetValue())
+    .then(() => resetValue());
 }
 
 // listen on port

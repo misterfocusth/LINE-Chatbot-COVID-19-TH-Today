@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>COVID-19 TH - Today - Share</title>
+</head>
+<body>
+<script src="https://static.line-scdn.net/liff/edge/versions/2.1.13/sdk.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/node-fetch@2.6.0/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/node-fetch@2.6.0/lib/index.mjs"></script>
+
+<script>
+
+    var FLEX_SHARE_TARGET_PICKER = [{
+        "type": "flex",
+        "altText": "Flex Message",
+        "contents": {
+            "type": "carousel",
+            "contents": [
+                {
+                    "type": "bubble",
+                    "direction": "ltr",
+                    "hero": {
+                        "type": "image",
+                        "url": "https://firebasestorage.googleapis.com/v0/b/covid-19-th-situation-tracker.appspot.com/o/Line/Hero_Images/2.png?alt=media&token=233b1ec5-3654-4e21-aace-b3f1dc31601c",
+                        "margin": "none",
+                        "size": "full",
+                        "aspectRatio": "2:1",
+                        "aspectMode": "fit"
+                    },
+                    "body": {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                            {
+                                "type": "text",
+                                "text": "วันที่ : (date)",
+                                "size": "sm",
+                                "align": "center",
+                                "weight": "bold"
+                            },
+                            {
+                                "type": "separator",
+                                "margin": "lg"
+                            },
+                            {
+                                "type": "text",
+                                "text": "ผู้ติดเชื้อรายใหม่วันนี้",
+                                "margin": "lg",
+                                "align": "center",
+                                "weight": "bold",
+                                "color": "#FF6D00"
+                            },
+                            {
+                                "type": "text",
+                                "text": "( + 1 )",
+                                "margin": "md",
+                                "size": "sm",
+                                "align": "center",
+                                "weight": "bold",
+                                "color": "#FF6D00"
+                            },
+                            {
+                                "type": "separator",
+                                "margin": "xl"
+                            },
+                            {
+                                "type": "text",
+                                "text": "ผู้รักษาหายรายใหม่วันนี้",
+                                "margin": "lg",
+                                "align": "center",
+                                "weight": "bold",
+                                "color": "#64DD17"
+                            },
+                            {
+                                "type": "text",
+                                "text": "( + 1 )",
+                                "margin": "md",
+                                "size": "sm",
+                                "align": "center",
+                                "weight": "bold",
+                                "color": "#64DD17"
+                            },
+                            {
+                                "type": "separator",
+                                "margin": "xl"
+                            },
+                            {
+                                "type": "text",
+                                "text": "ผู้เสียชีวิตรายใหม่วันนี้",
+                                "margin": "lg",
+                                "align": "center",
+                                "weight": "bold",
+                                "color": "#DD2C00"
+                            },
+                            {
+                                "type": "text",
+                                "text": "( + 1 )",
+                                "margin": "md",
+                                "size": "sm",
+                                "align": "center",
+                                "weight": "bold",
+                                "color": "#DD2C00"
+                            },
+                            {
+                                "type": "separator",
+                                "margin": "xl"
+                            }
+                        ]
+                    },
+                    "footer": {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                            {
+                                "type": "text",
+                                "text": "ข้อมูลจาก : กรมควบคุมโรค กระทรวงสาธารณสุข",
+                                "size": "xs",
+                                "align": "center"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "bubble",
+                    "direction": "ltr",
+                    "hero": {
+                        "type": "image",
+                        "url": "https://firebasestorage.googleapis.com/v0/b/covid-19-th-situation-tracker.appspot.com/o/Line/Hero_Images/6.png?alt=media&token=69311fe2-2f5d-40bf-80b0-63411cb2c167",
+                        "size": "full",
+                        "aspectRatio": "2:1",
+                        "aspectMode": "fit"
+                    },
+                    "body": {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                            {
+                                "type": "separator",
+                                "margin": "xl"
+                            },
+                            {
+                                "type": "text",
+                                "text": "จำนวนผู้ติดเชื้อสะสม : ",
+                                "margin": "lg",
+                                "align": "center",
+                                "weight": "bold",
+                                "color": "#FF6D00"
+                            },
+                            {
+                                "type": "text",
+                                "text": "(เพิ่มขึ้นวันนี้ : +)",
+                                "margin": "md",
+                                "size": "xs",
+                                "align": "center",
+                                "weight": "bold"
+                            },
+                            {
+                                "type": "separator",
+                                "margin": "xl"
+                            },
+                            {
+                                "type": "text",
+                                "text": "จำนวนผู้รักษาหายสะสม : ",
+                                "margin": "lg",
+                                "align": "center",
+                                "weight": "bold",
+                                "color": "#64DD17"
+                            },
+                            {
+                                "type": "text",
+                                "text": "กำลังรักษาจำนวน : ",
+                                "margin": "md",
+                                "size": "xs",
+                                "align": "center",
+                                "weight": "bold"
+                            },
+                            {
+                                "type": "text",
+                                "text": "(เพิ่มขึ้นวันนี้ : +)",
+                                "margin": "md",
+                                "size": "xs",
+                                "align": "center",
+                                "weight": "bold"
+                            },
+                            {
+                                "type": "separator",
+                                "margin": "xl"
+                            },
+                            {
+                                "type": "text",
+                                "text": "จำนวนผู้เสียชีวิตสะสม : ",
+                                "margin": "lg",
+                                "align": "center",
+                                "weight": "bold",
+                                "color": "#DD2C00"
+                            },
+                            {
+                                "type": "text",
+                                "text": "(เพิ่มขึ้นวันนี้ : +)",
+                                "margin": "md",
+                                "size": "xs",
+                                "align": "center",
+                                "weight": "bold"
+                            },
+                            {
+                                "type": "separator",
+                                "margin": "xl"
+                            }
+                        ]
+                    },
+                    "footer": {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                            {
+                                "type": "text",
+                                "text": "อัพเดทล่าสุด : date",
+                                "size": "xs",
+                                "align": "center"
+                            },
+                            {
+                                "type": "text",
+                                "text": "ข้อมูลจาก : กรมควบคุมโรค กระทรวงสาธารณสุข",
+                                "margin": "md",
+                                "size": "xs",
+                                "align": "center"
+                            }
+                        ]
+                    },
+                    "styles": {
+                        "hero": {
+                            "backgroundColor": "#FFFFFF"
+                        }
+                    }
+                },
+                {
+                    "type": "bubble",
+                    "direction": "ltr",
+                    "hero": {
+                        "type": "image",
+                        "url": "https://firebasestorage.googleapis.com/v0/b/covid-19-th-situation-tracker.appspot.com/o/Line/Hero_Images/5.png?alt=media&token=c6fc7fcc-460c-4dfb-8b6d-896a14ccfb70",
+                        "size": "full",
+                        "aspectRatio": "2:1",
+                        "aspectMode": "fit"
+                    },
+                    "body": {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                            {
+                                "type": "separator"
+                            },
+                            {
+                                "type": "text",
+                                "text": "ผู้ติดเชื้อรายใหม่จำนวน (+ 1) คน\n\nจำนวนผู้รักษาหายวันนี้เพิ่มขึ้น (+ 1) คน\n\nรักษาตัวอยู่ในโรงพยาบาล (+ 1) คน\n\nผู้เสียชีวิตรายใหม่ (+ 1) คน\n",
+                                "margin": "lg",
+                                "size": "sm",
+                                "align": "center",
+                                "gravity": "center",
+                                "weight": "bold",
+                                "wrap": true
+                            },
+                            {
+                                "type": "separator"
+                            },
+                            {
+                                "type": "button",
+                                "action": {
+                                    "type": "uri",
+                                    "label": "Share - เเชร์ข้อมูล",
+                                    "uri": "https://linecorp.com"
+                                },
+                                "margin": "xxl",
+                                "height": "sm",
+                                "style": "primary"
+                            }
+                        ]
+                    },
+                    "footer": {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                            {
+                                "type": "text",
+                                "text": "อัพเดทล่าสุด : (date)",
+                                "size": "xs",
+                                "align": "center"
+                            },
+                            {
+                                "type": "text",
+                                "text": "ข้อมูลจาก : กรมควบคุมโรค กระทรวงสาธารณสุข",
+                                "margin": "md",
+                                "size": "xs",
+                                "align": "center"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "bubble",
+                    "direction": "ltr",
+                    "hero": {
+                        "type": "image",
+                        "url": "https://firebasestorage.googleapis.com/v0/b/covid-19-th-situation-tracker.appspot.com/o/Line/Hero_Images/3.png?alt=media&token=c029773b-6612-4dba-a377-66646a1d95c4",
+                        "size": "full",
+                        "aspectRatio": "2:1",
+                        "aspectMode": "fit"
+                    },
+                    "body": {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                            {
+                                "type": "separator",
+                                "margin": "xl",
+                                "color": "#000000"
+                            },
+                            {
+                                "type": "text",
+                                "text": "เเอพพลิเคชั่น COVID-19 TH Situation Tracker จัดทำขึ้นเพื่อติดตาม รายงานสถานการณ์ เเละเเสดงผลข้อมูล ข้อมูลเเละรายงานทั้งหมด มาจาก Open API ของ กรมควบคุมโรค กระทรวงสาธารณสุข",
+                                "margin": "lg",
+                                "size": "sm",
+                                "align": "start",
+                                "weight": "bold",
+                                "wrap": true
+                            },
+                            {
+                                "type": "separator",
+                                "margin": "lg",
+                                "color": "#000000"
+                            },
+                            {
+                                "type": "button",
+                                "action": {
+                                    "type": "uri",
+                                    "label": "ข้อมูลเพิ่มเติม",
+                                    "uri": "https://covid19.th-stat.com/"
+                                },
+                                "margin": "lg",
+                                "height": "sm",
+                                "style": "primary",
+                                "gravity": "top"
+                            },
+                            {
+                                "type": "button",
+                                "action": {
+                                    "type": "uri",
+                                    "label": "เกี่ยวกับนักพัฒนา",
+                                    "uri": "https://covid19.th-stat.com/"
+                                },
+                                "margin": "md",
+                                "height": "sm",
+                                "style": "primary",
+                                "gravity": "top"
+                            }
+                        ]
+                    },
+                    "footer": {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                            {
+                                "type": "text",
+                                "text": "ออกเเบบ พัฒนาโดย : Focus Sila Pakdeewong (MisterFocusTH)",
+                                "margin": "xl",
+                                "size": "xs",
+                                "align": "center",
+                                "wrap": true
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "bubble",
+                    "direction": "ltr",
+                    "hero": {
+                        "type": "image",
+                        "url": "https://firebasestorage.googleapis.com/v0/b/covid-19-th-situation-tracker.appspot.com/o/Line/Hero_Images/Hero_SharrTargetPicker_AddFriend_1.png?alt=media&token=882d5f4e-6953-465c-bc59-e83a6aa42059",
+                        "margin": "none",
+                        "align": "center",
+                        "size": "full",
+                        "aspectRatio": "2:1",
+                        "aspectMode": "fit"
+                    },
+                    "body": {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                            {
+                                "type": "image",
+                                "url": "https://firebasestorage.googleapis.com/v0/b/covid-19-th-situation-tracker.appspot.com/o/Line/Hero_Images/Hero_SharrTargetPicker_AddFriend_2.png?alt=media&token=5ab292f0-aa6f-4941-894a-cc5daa7eb3c4",
+                                "margin": "none",
+                                "size": "full",
+                                "aspectRatio": "2:1",
+                                "aspectMode": "fit"
+                            },
+                            {
+                                "type": "image",
+                                "url": "https://firebasestorage.googleapis.com/v0/b/covid-19-th-situation-tracker.appspot.com/o/Line/Hero_Images/Hero_SharrTargetPicker_AddFriend_3.png?alt=media&token=2a6f339a-0662-45d9-9a76-46fd233fcca4",
+                                "size": "full",
+                                "aspectRatio": "2:1",
+                                "aspectMode": "fit"
+                            }
+                        ]
+                    },
+                    "footer": {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                            {
+                                "type": "button",
+                                "action": {
+                                    "type": "uri",
+                                    "label": "เป็นเพื่อนกับเรา !",
+                                    "uri": "https://line.me/R/ti/p/@410pyuyl"
+                                },
+                                "height": "sm",
+                                "style": "primary"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }];
+
+    var response = {}
+
+    async function sendShareTargetPicker() {
+        if (liff.getContext().type !== "none") {
+            await liff.sendMessages()
+        }
+        alert("การส่งข้อความสำเร็จ ข้อความของคุณถูกส่งเเล้ว !")
+        liff.closeWindow()
+    }
+
+    async function main() {
+        liff.ready.then(() => {
+            fetchData()
+        })
+        await liff.init({ liffId: "1654340969-ED5Nz3y1" })
+    }
+
+    function fetchData() {
+        fetch("https://covid19.th-stat.com/api/open/today")
+            .then(res => res.json())
+            .then((res) => {
+                console.log(res)
+                response = res
+            }).catch(error => console.log(error))
+            .then(() => resetValue())
+    }
+
+    function resetValue() {
+        FLEX_SHARE_TARGET_PICKER = [{
+            "type": "flex",
+            "altText": "Flex Message",
+            "contents": {
+                "type": "carousel",
+                "contents": [
+                    {
+                        "type": "bubble",
+                        "direction": "ltr",
+                        "hero": {
+                            "type": "image",
+                            "url": "https://firebasestorage.googleapis.com/v0/b/covid-19-th-situation-tracker.appspot.com/o/Line/Hero_Images/2.png?alt=media&token=233b1ec5-3654-4e21-aace-b3f1dc31601c",
+                            "margin": "none",
+                            "size": "full",
+                            "aspectRatio": "2:1",
+                            "aspectMode": "fit"
+                        },
+                        "body": {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                                {
+                                    "type": "text",
+                                    "text": "วันที่ : (date)",
+                                    "size": "sm",
+                                    "align": "center",
+                                    "weight": "bold"
+                                },
+                                {
+                                    "type": "separator",
+                                    "margin": "lg"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "ผู้ติดเชื้อรายใหม่วันนี้",
+                                    "margin": "lg",
+                                    "align": "center",
+                                    "weight": "bold",
+                                    "color": "#FF6D00"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "( + 1 )",
+                                    "margin": "md",
+                                    "size": "sm",
+                                    "align": "center",
+                                    "weight": "bold",
+                                    "color": "#FF6D00"
+                                },
+                                {
+                                    "type": "separator",
+                                    "margin": "xl"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "ผู้รักษาหายรายใหม่วันนี้",
+                                    "margin": "lg",
+                                    "align": "center",
+                                    "weight": "bold",
+                                    "color": "#64DD17"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "( + 1 )",
+                                    "margin": "md",
+                                    "size": "sm",
+                                    "align": "center",
+                                    "weight": "bold",
+                                    "color": "#64DD17"
+                                },
+                                {
+                                    "type": "separator",
+                                    "margin": "xl"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "ผู้เสียชีวิตรายใหม่วันนี้",
+                                    "margin": "lg",
+                                    "align": "center",
+                                    "weight": "bold",
+                                    "color": "#DD2C00"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "( + 1 )",
+                                    "margin": "md",
+                                    "size": "sm",
+                                    "align": "center",
+                                    "weight": "bold",
+                                    "color": "#DD2C00"
+                                },
+                                {
+                                    "type": "separator",
+                                    "margin": "xl"
+                                }
+                            ]
+                        },
+                        "footer": {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                                {
+                                    "type": "text",
+                                    "text": "ข้อมูลจาก : กรมควบคุมโรค กระทรวงสาธารณสุข",
+                                    "size": "xs",
+                                    "align": "center"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "type": "bubble",
+                        "direction": "ltr",
+                        "hero": {
+                            "type": "image",
+                            "url": "https://firebasestorage.googleapis.com/v0/b/covid-19-th-situation-tracker.appspot.com/o/Line/Hero_Images/6.png?alt=media&token=69311fe2-2f5d-40bf-80b0-63411cb2c167",
+                            "size": "full",
+                            "aspectRatio": "2:1",
+                            "aspectMode": "fit"
+                        },
+                        "body": {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                                {
+                                    "type": "separator",
+                                    "margin": "xl"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "จำนวนผู้ติดเชื้อสะสม : ",
+                                    "margin": "lg",
+                                    "align": "center",
+                                    "weight": "bold",
+                                    "color": "#FF6D00"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "(เพิ่มขึ้นวันนี้ : +)",
+                                    "margin": "md",
+                                    "size": "xs",
+                                    "align": "center",
+                                    "weight": "bold"
+                                },
+                                {
+                                    "type": "separator",
+                                    "margin": "xl"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "จำนวนผู้รักษาหายสะสม : ",
+                                    "margin": "lg",
+                                    "align": "center",
+                                    "weight": "bold",
+                                    "color": "#64DD17"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "กำลังรักษาจำนวน : ",
+                                    "margin": "md",
+                                    "size": "xs",
+                                    "align": "center",
+                                    "weight": "bold"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "(เพิ่มขึ้นวันนี้ : +)",
+                                    "margin": "md",
+                                    "size": "xs",
+                                    "align": "center",
+                                    "weight": "bold"
+                                },
+                                {
+                                    "type": "separator",
+                                    "margin": "xl"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "จำนวนผู้เสียชีวิตสะสม : ",
+                                    "margin": "lg",
+                                    "align": "center",
+                                    "weight": "bold",
+                                    "color": "#DD2C00"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "(เพิ่มขึ้นวันนี้ : +)",
+                                    "margin": "md",
+                                    "size": "xs",
+                                    "align": "center",
+                                    "weight": "bold"
+                                },
+                                {
+                                    "type": "separator",
+                                    "margin": "xl"
+                                }
+                            ]
+                        },
+                        "footer": {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                                {
+                                    "type": "text",
+                                    "text": "อัพเดทล่าสุด : date",
+                                    "size": "xs",
+                                    "align": "center"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "ข้อมูลจาก : กรมควบคุมโรค กระทรวงสาธารณสุข",
+                                    "margin": "md",
+                                    "size": "xs",
+                                    "align": "center"
+                                }
+                            ]
+                        },
+                        "styles": {
+                            "hero": {
+                                "backgroundColor": "#FFFFFF"
+                            }
+                        }
+                    },
+                    {
+                        "type": "bubble",
+                        "direction": "ltr",
+                        "hero": {
+                            "type": "image",
+                            "url": "https://firebasestorage.googleapis.com/v0/b/covid-19-th-situation-tracker.appspot.com/o/Line/Hero_Images/5.png?alt=media&token=c6fc7fcc-460c-4dfb-8b6d-896a14ccfb70",
+                            "size": "full",
+                            "aspectRatio": "2:1",
+                            "aspectMode": "fit"
+                        },
+                        "body": {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                                {
+                                    "type": "separator"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "ผู้ติดเชื้อรายใหม่จำนวน (+ 1) คน\n\nจำนวนผู้รักษาหายวันนี้เพิ่มขึ้น (+ 1) คน\n\nรักษาตัวอยู่ในโรงพยาบาล (+ 1) คน\n\nผู้เสียชีวิตรายใหม่ (+ 1) คน\n",
+                                    "margin": "lg",
+                                    "size": "sm",
+                                    "align": "center",
+                                    "gravity": "center",
+                                    "weight": "bold",
+                                    "wrap": true
+                                },
+                                {
+                                    "type": "separator"
+                                },
+                                {
+                                    "type": "button",
+                                    "action": {
+                                        "type": "uri",
+                                        "label": "Share - เเชร์ข้อมูล",
+                                        "uri": "https://linecorp.com"
+                                    },
+                                    "margin": "xxl",
+                                    "height": "sm",
+                                    "style": "primary"
+                                }
+                            ]
+                        },
+                        "footer": {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                                {
+                                    "type": "text",
+                                    "text": "อัพเดทล่าสุด : (date)",
+                                    "size": "xs",
+                                    "align": "center"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "ข้อมูลจาก : กรมควบคุมโรค กระทรวงสาธารณสุข",
+                                    "margin": "md",
+                                    "size": "xs",
+                                    "align": "center"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "type": "bubble",
+                        "direction": "ltr",
+                        "hero": {
+                            "type": "image",
+                            "url": "https://firebasestorage.googleapis.com/v0/b/covid-19-th-situation-tracker.appspot.com/o/Line/Hero_Images/3.png?alt=media&token=c029773b-6612-4dba-a377-66646a1d95c4",
+                            "size": "full",
+                            "aspectRatio": "2:1",
+                            "aspectMode": "fit"
+                        },
+                        "body": {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                                {
+                                    "type": "separator",
+                                    "margin": "xl",
+                                    "color": "#000000"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "เเอพพลิเคชั่น COVID-19 TH Situation Tracker จัดทำขึ้นเพื่อติดตาม รายงานสถานการณ์ เเละเเสดงผลข้อมูล ข้อมูลเเละรายงานทั้งหมด มาจาก Open API ของ กรมควบคุมโรค กระทรวงสาธารณสุข",
+                                    "margin": "lg",
+                                    "size": "sm",
+                                    "align": "start",
+                                    "weight": "bold",
+                                    "wrap": true
+                                },
+                                {
+                                    "type": "separator",
+                                    "margin": "lg",
+                                    "color": "#000000"
+                                },
+                                {
+                                    "type": "button",
+                                    "action": {
+                                        "type": "uri",
+                                        "label": "ข้อมูลเพิ่มเติม",
+                                        "uri": "https://covid19.th-stat.com/"
+                                    },
+                                    "margin": "lg",
+                                    "height": "sm",
+                                    "style": "primary",
+                                    "gravity": "top"
+                                },
+                                {
+                                    "type": "button",
+                                    "action": {
+                                        "type": "uri",
+                                        "label": "เกี่ยวกับนักพัฒนา",
+                                        "uri": "https://covid19.th-stat.com/"
+                                    },
+                                    "margin": "md",
+                                    "height": "sm",
+                                    "style": "primary",
+                                    "gravity": "top"
+                                }
+                            ]
+                        },
+                        "footer": {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                                {
+                                    "type": "text",
+                                    "text": "ออกเเบบ พัฒนาโดย : Focus Sila Pakdeewong (MisterFocusTH)",
+                                    "margin": "xl",
+                                    "size": "xs",
+                                    "align": "center",
+                                    "wrap": true
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "type": "bubble",
+                        "direction": "ltr",
+                        "hero": {
+                            "type": "image",
+                            "url": "https://firebasestorage.googleapis.com/v0/b/covid-19-th-situation-tracker.appspot.com/o/Line/Hero_Images/Hero_SharrTargetPicker_AddFriend_1.png?alt=media&token=882d5f4e-6953-465c-bc59-e83a6aa42059",
+                            "margin": "none",
+                            "align": "center",
+                            "size": "full",
+                            "aspectRatio": "2:1",
+                            "aspectMode": "fit"
+                        },
+                        "body": {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                                {
+                                    "type": "image",
+                                    "url": "https://firebasestorage.googleapis.com/v0/b/covid-19-th-situation-tracker.appspot.com/o/Line/Hero_Images/Hero_SharrTargetPicker_AddFriend_2.png?alt=media&token=5ab292f0-aa6f-4941-894a-cc5daa7eb3c4",
+                                    "margin": "none",
+                                    "size": "full",
+                                    "aspectRatio": "2:1",
+                                    "aspectMode": "fit"
+                                },
+                                {
+                                    "type": "image",
+                                    "url": "https://firebasestorage.googleapis.com/v0/b/covid-19-th-situation-tracker.appspot.com/o/Line/Hero_Images/Hero_SharrTargetPicker_AddFriend_3.png?alt=media&token=2a6f339a-0662-45d9-9a76-46fd233fcca4",
+                                    "size": "full",
+                                    "aspectRatio": "2:1",
+                                    "aspectMode": "fit"
+                                }
+                            ]
+                        },
+                        "footer": {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                                {
+                                    "type": "button",
+                                    "action": {
+                                        "type": "uri",
+                                        "label": "เป็นเพื่อนกับเรา !",
+                                        "uri": "https://line.me/R/ti/p/@410pyuyl"
+                                    },
+                                    "height": "sm",
+                                    "style": "primary"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }];
+        sendShareTargetPicker()
+    }
+
+    main()
+</script>
+</body>
+</html>
