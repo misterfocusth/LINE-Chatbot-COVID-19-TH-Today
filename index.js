@@ -1158,8 +1158,10 @@ var CAROUSEL_2 = [{
 
 // create LINE SDK config from env variables
 const config = {
-  channelAccessToken: process.env.CAT,
-  channelSecret: process.env.CS,
+  // channelAccessToken: process.env.CAT,
+  // channelSecret: process.env.CS,
+  channelAccessToken: "n4kE4+LlIxGtAV0a8Jbw/YVP8jJlCbbQuE+/+BxplchxWr9iotmwjgmwrdqs0WCM1oM5Qb8aGDttFebP2uqnIIJDRktas09rC6IHqX3z2zsYdX/IaK9WPY52uqgeqpMiFu+1qCjKixdoUfNwOr6ZKwdB04t89/1O/w1cDnyilFU=",
+  channelSecret: "bb19e571cab7f3d52149e757e72700c9",
 };
 
 const client = new line.Client(config);
