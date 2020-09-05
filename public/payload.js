@@ -1932,4 +1932,4 @@ function resetValue() {
 
 }
 
-module.exports = {setResponse};
+module.exports = {setResponse, resetValue};
