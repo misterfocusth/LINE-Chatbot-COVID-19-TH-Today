@@ -1,8 +1,7 @@
 /*jshint esversion: 8 */
 
-const line = require('@line/bot-sdk');
-const express = require('express');
-const fetch = require("node-fetch");
+const data = require("./data.js");
+const index = require("./index.js");
 
 var response = {};
 
@@ -1156,163 +1155,9 @@ var CAROUSEL_2 = [{
   }
 ];
 
-// create LINE SDK config from env variables
-const config = {
-  channelAccessToken: process.env.CAT,
-  channelSecret: process.env.CS,
-};
-
-const client = new line.Client(config);
-
-const app = express();
-
-app.get("/", (req, res) => {
-  res.send("Ready !");
-});
-
-app.get("/share", (req, res) => {
-  console.log(__dirname);
-  res.sendFile("/app/index.html"); // index.html
-});
-
-app.post('/callback', line.middleware(config), (req, res) => {
-  Promise
-    .all(req.body.events.map(handleEvent))
-    .then((result) => res.json(result))
-    .catch((err) => {
-      console.error(err);
-      res.status(500).end();
-    });
-});
-
-// event handler
-function handleEvent(event) {
-  if (event.type !== 'message' || event.message.type !== 'text') {
-    const msg = [{
-      "type": "text", // ①
-      "text": "หรือคุณหมายถึง ?",
-      "quickReply": { // ②
-        "items": [{
-            "type": "action",
-            "action": {
-              "type": "message",
-              "label": "รายงานวันนี้",
-              "text": "เมนู:รายงานวันนี้"
-            }
-          },
-          {
-            "type": "action",
-            "action": {
-              "type": "message",
-              "label": "ยอดสะสมในไทยทั้งหมด",
-              "text": "QP:ยอดสะสมในไทยทั้งหมด"
-            }
-          },
-          {
-            "type": "action",
-            "action": {
-              "type": "message",
-              "label": "สรุปสถานการณ์ผู้ติดเชื้อวันนี้",
-              "text": "QP:สรุปสถานการณ์ผู้ติดเชื้อวันนี้"
-            }
-          },
-          {
-            "type": "action",
-            "action": {
-              "type": "message",
-              "label": "คำเเนะนำเเละการป้องกัน",
-              "text": "QP:คำเเนะนำเเละการป้องกัน"
-            }
-          },
-          {
-            "type": "action",
-            "action": {
-              "type": "message",
-              "label": "เกี่ยวกับนักพัฒนา",
-              "text": "QP:เกี่ยวกับนักพัฒนา"
-            }
-          }
-        ]
-      }
-    }];
-    return client.replyMessage(event.replyToken, msg);
-  } else if (event.message.text == "Open_LIFF" && event.message.type == "text") {
-    const msg = [{
-        type: "text",
-        text: "Your Message : " + event.message.text
-      },
-      {
-        "type": "sticker",
-        "packageId": "11538",
-        "stickerId": "51626501"
-      }
-    ];
-    client.replyMessage(event.replyToken, msg);
-  } else if (event.message.text == "เมนู:รายงานวันนี้" && event.message.type == "text") {
-    fetchData(event);
-    return client.replyMessage(event.replyToken, CAROUSEL_1);
-  } else if (event.message.text == "QP:ยอดสะสมในไทยทั้งหมด") {
-    fetchData(event);
-    client.replyMessage(event.replyToken, FLEX_ALL_IN_TH);
-  } else if (event.message.text == "QP:สรุปสถานการณ์ผู้ติดเชื้อวันนี้") {
-    fetchData(event);
-    return client.replyMessage(event.replyToken, FLEX_TODAY);
-  } else if (event.message.text == "QP:คำเเนะนำเเละการป้องกัน" || event.message.text == "เมนู:คำเเนะนำเเละการป้องกัน") {
-    return client.replyMessage(event.replyToken, CAROUSEL_2);
-  } else if (event.message.text == "QP:เกี่ยวกับนักพัฒนา" || event.message.text == "เมนู:เกี่ยวกับนักพัฒนา") {
-    fetchData(event);
-    return client.replyMessage(event.replyToken, FLEX_ABOUT_DEVELOPER);
-  } else {
-    fetchData(event);
-    const msg = [{
-      "type": "text", // ①
-      "text": "หรือคุณหมายถึง ?",
-      "quickReply": { // ②
-        "items": [{
-            "type": "action",
-            "action": {
-              "type": "message",
-              "label": "รายงานวันนี้",
-              "text": "เมนู:รายงานวันนี้"
-            }
-          },
-          {
-            "type": "action",
-            "action": {
-              "type": "message",
-              "label": "ยอดสะสมในไทยทั้งหมด",
-              "text": "QP:ยอดสะสมในไทยทั้งหมด"
-            }
-          },
-          {
-            "type": "action",
-            "action": {
-              "type": "message",
-              "label": "สรุปสถานการณ์ผู้ติดเชื้อวันนี้",
-              "text": "QP:สรุปสถานการณ์ผู้ติดเชื้อวันนี้"
-            }
-          },
-          {
-            "type": "action",
-            "action": {
-              "type": "message",
-              "label": "คำเเนะนำเเละการป้องกัน",
-              "text": "QP:คำเเนะนำเเละการป้องกัน"
-            }
-          },
-          {
-            "type": "action",
-            "action": {
-              "type": "message",
-              "label": "เกี่ยวกับนักพัฒนา",
-              "text": "QP:เกี่ยวกับนักพัฒนา"
-            }
-          }
-        ]
-      }
-    }];
-    return client.replyMessage(event.replyToken, msg);
-  }
+function setResponse(res) {
+  response = res;
+  resetValue();
 }
 
 function resetValue() {
@@ -2083,21 +1928,8 @@ function resetValue() {
     }
   ];
 
+  index.setFlexObjects(response, CAROUSEL_1, FLEX_ALL_IN_TH, FLEX_TODAY, CAROUSEL_2, FLEX_ABOUT_DEVELOPER);
+
 }
 
-
-function fetchData(event) {
-  fetch("https://covid19.th-stat.com/api/open/today")
-    .then(res => res.json())
-    .then((res) => {
-      console.log(res);
-      response = res;
-    }).catch(error => console.log(error))
-    .then(() => resetValue());
-}
-
-// listen on port
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`listening on ${port}`);
-});
+module.exports = {setResponse, resetValue};
