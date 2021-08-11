@@ -1,21 +1,16 @@
 /*jshint esversion: 8 */
+const axios = require("axios");
 
-const fetch = require("node-fetch");
-const payload = require("./payload.js");
+class Data {
+  async fetchData() {
+    var dataRes = {};
+    const API_KEY = "12c8f541-c0f7-4eed-9888-202107164a9ef46387";
 
-let dataRes = {};
+    const response = await axios.get("https://api-lab-covid.mindbase.co.th/v2/stats/daily?key=" + API_KEY)
+    dataRes = response.data;
 
-function fetchData() {
-    fetch("https://covid19.th-stat.com/api/open/today")
-      .then(res => res.json())
-      .then((res) => {
-        dataRes = res;
-      }).catch(error => console.log(error))
-      .then((result) => {
-        payload.setResponse(dataRes);
-      }).catch((err) => {
-        console.log(err);
-      });
+    return dataRes;
+  }
 }
 
-module.exports = {fetchData};
+module.exports = new Data();
