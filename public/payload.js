@@ -335,7 +335,7 @@ class Payload {
               "action": {
                 "type": "uri",
                 "label": "ข้อมูลเพิ่มเติม",
-                "uri": "https://covid19.th-stat.com/"
+                "uri": "https://ddc.moph.go.th/covid19-dashboard/"
               },
               "margin": "lg",
               "height": "sm",
@@ -729,7 +729,7 @@ class Payload {
             "action": {
               "type": "uri",
               "label": "ข้อมูลเพิ่มเติม",
-              "uri": "https://covid19.th-stat.com/"
+              "uri": "https://ddc.moph.go.th/covid19-dashboard/"
             },
             "margin": "lg",
             "height": "sm",
@@ -856,7 +856,7 @@ class Payload {
               "action": {
                 "type": "uri",
                 "label": "ทำเเบบประเมิน",
-                "uri": "https://covid19.th-stat.com/th/self_screening"
+                "uri": "http://bkkcovid19.bangkok.go.th/covid/frontend/web/"
               },
               "style": "primary"
             }]
@@ -1136,7 +1136,7 @@ class Payload {
               "action": {
                 "type": "uri",
                 "label": "Button",
-                "uri": "https://covid19.th-stat.com/"
+                "uri": "http://bkkcovid19.bangkok.go.th/covid/frontend/web/"
               },
               "style": "primary"
             }]
@@ -1428,7 +1428,7 @@ class Payload {
               "contents": [
                 {
                   "type": "text",
-                  "text": "อัพเดทล่าสุด : date",
+                  "text": "อัพเดทล่าสุด : " + response.data.updated_date,
                   "size": "xs",
                   "align": "center",
                   "contents": []
