@@ -1,3 +1,5 @@
+![Banner_Image](https://github.com/misterfocusth/LINE-Chatbot-COVID-19-TH-Today/blob/master/LINE%20Chatbot%20COVID-19%20TH%20-%20Today%20-%20Project%20Presentation%20-%20Sila%20Pakdeewong%20(1).jpg?raw=true)
+
 # Line-Chatbot-COVID-19-TH-Today
 Line เเชทบอท COVID-19 TH - Today จัดทำขึ้นเพื่อติดตาม รายงานสถานการณ์เเละเเสดงผลข้อมูล ข้อมูลเเละรายงานทั้งหมดมาจาก Open API ของ กรมควบคุมโรค กระทรวงสาธารณสุข
 
